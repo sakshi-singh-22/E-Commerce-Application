@@ -1,0 +1,150 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "ORDER",
+    "collectionId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+    "dateExported": "2024-09-05T07:01:28.645Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "182b586a-ba6a-4683-9787-4d738f640e35",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "Get All Locations",
+            "url": "http://localhost:3001/api/orders/locations",
+            "method": "GET",
+            "sortNum": 5000,
+            "created": "2024-09-03T11:44:25.409Z",
+            "modified": "2024-09-05T04:56:25.948Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkODBlNTc2NjI4YTBkMGZjMGIwMmQzIn0sImlhdCI6MTcyNTUxMDMyNiwiZXhwIjoxNzI4MTAyMzI2fQ.zKz2AUhE6OX3IUmeXI-M6q9SADjr6DMSx0EiFoUoxhQ"
+                }
+            ]
+        },
+        {
+            "_id": "1f1466f0-06e5-4c0e-8502-3e23dce5e432",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "Get All Payment Methods",
+            "url": "http://localhost:3001/api/orders/payment-methods",
+            "method": "GET",
+            "sortNum": 7500,
+            "created": "2024-09-03T12:01:31.548Z",
+            "modified": "2024-09-03T12:08:31.157Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNTM2NDI4NywiZXhwIjoxNzI3OTU2Mjg3fQ.2Ug8AcfwP450sktK3MOxL8BOVNn8g_mUKBJUawWv6lA"
+                }
+            ]
+        },
+        {
+            "_id": "5e63f2f6-03f5-4566-84f8-97f32496e654",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "create-order",
+            "url": "http://localhost:3001/api/orders/create",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-08-26T09:14:31.598Z",
+            "modified": "2024-09-05T04:57:11.478Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkODBlNTc2NjI4YTBkMGZjMGIwMmQzIn0sImlhdCI6MTcyNTUxMDMyNiwiZXhwIjoxNzI4MTAyMzI2fQ.zKz2AUhE6OX3IUmeXI-M6q9SADjr6DMSx0EiFoUoxhQ"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n \"cartId\": \"66d937feac79ece3ab6f7e72\",\n  \"locationId\": \"66d93a0dac79ece3ab6f7e88\",\n  \"paymentMethod\": \"Cash on Delivery (COD)\"\n  }\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "7a132e72-36a7-4458-bd70-4b9ac96c410c",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "CancelRequest",
+            "url": "http://localhost:3001/api/orders/cancel-order",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-08-27T12:53:36.470Z",
+            "modified": "2024-09-04T15:46:56.551Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"orderId\" : \"66d83cad06f31310a2d9b4f3\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "2badede4-da79-48d9-8926-04f0e5be5d78",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "place-order",
+            "url": "http://localhost:3001/api/orders/update-status",
+            "method": "PATCH",
+            "sortNum": 35000,
+            "created": "2024-08-26T13:06:36.671Z",
+            "modified": "2024-09-05T05:03:11.751Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"orderId\": \"66d93b1aac79ece3ab6f7eb1\",\n  \"status\": \"Confirmed\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "214fe44c-bc27-4e05-b235-e7f1c2fd555c",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "OrderHistory",
+            "url": "http://localhost:3001/api/orders/history",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-08-29T11:27:05.921Z",
+            "modified": "2024-08-29T11:28:29.027Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA"
+                }
+            ]
+        },
+        {
+            "_id": "893790e1-bbdf-4e73-873e-62b2853f012f",
+            "colId": "b5d0ac35-b668-4dd3-97ac-4b58b8045140",
+            "containerId": "",
+            "name": "Re-Order",
+            "url": "http://localhost:3001/api/orders/reOrder",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-08-29T11:34:18.070Z",
+            "modified": "2024-09-04T07:59:41.587Z",
+            "headers": [
+                {
+                    "name": "x-auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"orderId\": \"66d7fbb62970337b26579898\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "2SqF6NhVsmueTm2DwaIk5vIC6JtVMILuN3o1in-jLmSAabQBX1ePHyOhb6PWG-d8e85LP_ycZ1EXrfQJ90wnDA"
+}

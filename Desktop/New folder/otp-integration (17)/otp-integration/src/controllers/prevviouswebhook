@@ -1,0 +1,180 @@
+// src/controllers/webhookController.js
+const Webhook = require("../model/webhookModel");
+const VendorOrderController = require("./vendorOrderController");
+const { assignOrderToDriver } = require('./orderAssignmentController');
+
+const createVendorOrderFromWebhook = async (req, res) => {
+  const { orderId } = req.body;
+
+  if (!orderId) {
+    return res.status(400).json({ message: "Order ID is required" });
+  }
+
+  try {
+    // Save webhook event
+    const webhookEvent = new Webhook({
+      eventType: "OrderCreated",
+      payload: req.body,
+    });
+    await webhookEvent.save();
+
+    console.log('Webhook received. Payload:', req.body);
+
+    // Trigger vendor order creation
+    const result = await VendorOrderController.createVendorOrders({ params: { orderId } }, res);
+
+    // If the response has already been sent, don't send another
+    if (!res.headersSent) {
+      res.status(200).json({ message: "Vendor order webhook processed successfully", result });
+    }
+  } catch (error) {
+    console.error("Error processing webhook:", error.message);
+    res.status(500).json({ message: "Failed to process webhook" });
+  }
+};
+
+// const webhookForVendorOrderUpdate = async (vendorOrderId) => {
+//   try {
+//     // Fetch the vendor order by ID
+//     const vendorOrder = await VendorOrder.findById(vendorOrderId);
+//     if (!vendorOrder) {
+//       throw new Error('Vendor Order not found');
+//     }
+
+//     // Fetch the main order associated with this vendor order
+//     const mainOrder = await Order.findById(vendorOrder.orderId);
+//     if (!mainOrder) {
+//       throw new Error('Main Order not found');
+//     }
+
+//     // Fetch all vendor orders related to this main order
+//     const vendorOrders = await VendorOrder.find({ orderId: mainOrder._id });
+
+//     // Check if all vendor orders have been processed (accepted or rejected)
+//     const allProcessed = vendorOrders.every(
+//       (order) => order.status === 'Accepted' || order.status === 'Rejected'
+//     );
+
+//     if (allProcessed) {
+//       // Call the updateOrderStatus function to update the main order status
+//       const acceptedItems = mainOrder.items.filter(
+//         (item) => item.vendorOrderStatus === 'Accepted By Vendor'
+//       );
+
+//       if (acceptedItems.length > 0) {
+//         // Update the status to Confirmed if there are accepted items
+//         await updateOrderStatus({ orderId: mainOrder._id, status: 'Confirmed' });
+//       } else {
+//         // If all items are rejected, cancel the order
+//         await updateOrderStatus({ orderId: mainOrder._id, status: 'Cancelled' });
+//       }
+//     }
+//   } catch (error) {
+//     console.error('Error in webhookForVendorOrderUpdate:', error.message);
+//   }
+// };
+
+const updateOrderStatusWebhook = async (req, res) => {
+  console.log("Webhook function hit."); // Debug line
+  const { orderId, status } = req.body;
+
+  if (!orderId || !status) {
+    return res.status(400).json({ message: "Order ID and status are required" });
+  }
+
+  try {
+    // Save webhook event
+    const webhookEvent = new Webhook({
+      eventType: "OrderStatusUpdated",
+      payload: req.body,
+    });
+    await webhookEvent.save();
+
+    console.log('Webhook received for order status update. Payload:', req.body);
+
+    // Check if the order status is confirmed
+    if (status === 'Confirmed') {
+      // Trigger order assignment to a driver
+      await assignOrderToDriver({ params: { orderId } }, res);
+    } else {
+      res.status(200).json({ message: "Order status received, no action taken" });
+    }
+  } catch (error) {
+    console.error("Error processing webhook:", error.message);
+    res.status(500).json({ message: "Failed to process webhook" });
+  }
+};
+
+module.exports = {
+  createVendorOrderFromWebhook,
+  // webhookForVendorOrderUpdate,
+  updateOrderStatusWebhook
+};
+
+
+
+// // // Create a new webhook
+// // const createWebhook = async (req, res) => {
+// //   try {
+// //     const { url, events } = req.body;
+
+// //     const newWebhook = new Webhook({ url, events });
+// //     await newWebhook.save();
+
+// //     res.status(201).json({ message: 'Webhook created successfully', webhook: newWebhook });
+// //   } catch (err) {
+// //     console.error('Error creating webhook:', err);
+// //     res.status(500).json({ message: 'Failed to create webhook', error: err.message });
+// //   }
+// // };
+
+// // // Get all webhooks
+// // const getWebhooks = async (req, res) => {
+// //   try {
+// //     const webhooks = await Webhook.find();
+// //     res.status(200).json({ webhooks });
+// //   } catch (err) {
+// //     console.error('Error fetching webhooks:', err);
+// //     res.status(500).json({ message: 'Failed to fetch webhooks', error: err.message });
+// //   }
+// // };
+
+// // // Update a webhook
+// // const updateWebhook = async (req, res) => {
+// //   const { id } = req.params;
+// //   const { url, events } = req.body;
+
+// //   try {
+// //     const webhook = await Webhook.findByIdAndUpdate(id, { url, events }, { new: true });
+// //     if (!webhook) {
+// //       return res.status(404).json({ message: 'Webhook not found' });
+// //     }
+// //     res.status(200).json({ message: 'Webhook updated successfully', webhook });
+// //   } catch (err) {
+// //     console.error('Error updating webhook:', err);
+// //     res.status(500).json({ message: 'Failed to update webhook', error: err.message });
+// //   }
+// // };
+
+// // // Delete a webhook
+// // const deleteWebhook = async (req, res) => {
+// //   const { id } = req.params;
+
+// //   try {
+// //     const webhook = await Webhook.findByIdAndDelete(id);
+// //     if (!webhook) {
+// //       return res.status(404).json({ message: 'Webhook not found' });
+// //     }
+// //     res.status(200).json({ message: 'Webhook deleted successfully' });
+// //   } catch (err) {
+// //     console.error('Error deleting webhook:', err);
+// //     res.status(500).json({ message: 'Failed to delete webhook', error: err.message });
+// //   }
+// // };
+
+// module.exports = {
+//   // createWebhook,
+//   // getWebhooks,
+//   // updateWebhook,
+//   // deleteWebhook
+// };

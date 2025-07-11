@@ -1,0 +1,175 @@
+{
+    "info": {
+        "_postman_id": "5cf42122-deab-49a8-a427-6995873b8836",
+        "name": "VENDOR",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "vendor-register",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/register-vendor",
+                    "path": [
+                        "auth",
+                        "register-vendor"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"number\": \"7668979865\",\n  \"name\": \"Test Vendor\",\n  \"location\": \"Test Location\",\n  \"email\": \"testvendor1@example.com\",\n  \"password\": \"password123\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "vendor-login",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/login-vendor",
+                    "path": [
+                        "auth",
+                        "login-vendor"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"updatedvendor@example.com\",\n  \"password\": \"password123\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "vendor-otp",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/login-vendor-phone",
+                    "path": [
+                        "auth",
+                        "login-vendor-phone"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"phoneNumber\" : \"7668979865\" \n}"
+                }
+            }
+        },
+        {
+            "name": "fetch-vendor",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/auth/vendor-profile",
+                    "path": [
+                        "auth",
+                        "vendor-profile"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0MTQ2NzEzLCJleHAiOjE3MjQxNTAzMTN9.hje5EK04OrHZwt4-BblBZqrAYLCoA_fc4R3BPcM7-uI"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "update-vendor",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/auth/vendor-profile",
+                    "path": [
+                        "auth",
+                        "vendor-profile"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0MTQ2NzEzLCJleHAiOjE3MjQxNTAzMTN9.hje5EK04OrHZwt4-BblBZqrAYLCoA_fc4R3BPcM7-uI"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"name\": \"Updated Vendor Name\",\r\n  \"location\": \"Updated Location\",\r\n  \"email\": \"updatedvendor@example.com\"\r\n}\r\n"
+                }
+            }
+        },
+        {
+            "name": "Vendor-verify-otp",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/verify-vendor-otp",
+                    "path": [
+                        "auth",
+                        "verify-vendor-otp"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"verificationId\": \"755170\",\r\n  \"phoneNumber\": \"7668979865\",\r\n  \"otp\": \"8195\"\r\n}\r\n"
+                }
+            }
+        }
+    ]
+}

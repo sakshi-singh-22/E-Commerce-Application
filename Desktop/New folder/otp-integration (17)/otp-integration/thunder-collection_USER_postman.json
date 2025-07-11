@@ -1,0 +1,247 @@
+{
+    "info": {
+        "_postman_id": "133d1bd2-54d1-41a2-826b-5cab526226a4",
+        "name": "USER",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "USER-registration",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/register-phone",
+                    "path": [
+                        "auth",
+                        "register-phone"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"phoneNumber\": \"7456974456\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "USER-login-password",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/login",
+                    "path": [
+                        "auth",
+                        "login"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"sakshi@gmail.com\",\n  \"password\": \"password123\"\n  }"
+                }
+            }
+        },
+        {
+            "name": "USER-login-number",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/login-phone",
+                    "path": [
+                        "auth",
+                        "login-phone"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"phoneNumber\": \"7668979865\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "USER-verify-otp",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/verifyOtp",
+                    "path": [
+                        "auth",
+                        "verifyOtp"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"verificationId\":\"787127\",\n  \"phoneNumber\":\"7668979865\",\n  \"otp\":\"7030\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Get-USER",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/auth/profile",
+                    "path": [
+                        "auth",
+                        "profile"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjZGQ4NTE4MTQ0MzVhMTVjZGNjMjg5In0sImlhdCI6MTcyNDgyMDE3MCwiZXhwIjoxNzI3NDEyMTcwfQ.XtVhlZBrgCeTom211PNU0sL9VNWc7XLWcvf8WKhmGt4"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Update-user-profile",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/auth/profile",
+                    "path": [
+                        "auth",
+                        "profile"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjZGQ4NTE4MTQ0MzVhMTVjZGNjMjg5In0sImlhdCI6MTcyNDc4NDA0NSwiZXhwIjoxNzI3Mzc2MDQ1fQ.POYlW5o2APEwaKFZF3UNUwYjQ5g3cGw9xIdEZlHhnfc"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Sakshi-updated\",\n  \"email\": \"sakshi@example.com\",\n    \"location\": {\n    \"geoCoordes\": {\n      \"type\": \"Point\",\n      \"coordinates\": [78.397842,17.515254]\n    },\n    \"address\": \"Some updated Address\",\n    \"placeName\": \"updated Place Name\"\n  }\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Register-verify",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/verifyOtpAndRegister",
+                    "path": [
+                        "auth",
+                        "verifyOtpAndRegister"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"verificationId\": \"792872\",\n  \"phoneNumber\": \"7456974456\",\n  \"otp\": \"3470\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Complete-User-profile",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/completeProfile",
+                    "path": [
+                        "auth",
+                        "completeProfile"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"phoneNumber\": \"7668979865\",\n  \"name\": \"sakshi\",\n  \"email\": \"sakshi@gmail.com\",\n  \"password\": \"password123\",\n   \"location\": {\n    \"geoCoordes\": {\n      \"type\": \"Point\",\n      \"coordinates\": [78.397842,17.515254]\n    },\n    \"address\": \"Some Address\",\n    \"placeName\": \"Place Name\"\n  }\n} "
+                }
+            }
+        },
+        {
+            "name": "LOGOUT",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/auth/logout",
+                    "path": [
+                        "auth",
+                        "logout"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                }
+            }
+        }
+    ]
+}

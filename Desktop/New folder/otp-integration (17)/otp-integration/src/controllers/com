@@ -1,0 +1,299 @@
+// controllers/webhookController.js
+const axios = require('axios');
+const WebSocket = require('ws');
+
+let clients = []; // Array to store connected WebSocket clients
+
+// WebSocket connection management
+function setupWebSocket(wss) {
+    wss.on('connection', (ws) => {
+        console.log('Client connected');
+        clients.push(ws);
+
+        ws.on('close', () => {
+            console.log('Client disconnected');
+            clients = clients.filter((client) => client !== ws);
+        });
+    });
+}
+
+// Function to send event data to all connected WebSocket clients
+function notifyClients(eventData) {
+    clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(eventData));
+        }
+    });
+}
+
+// Main webhook handler
+const handleWebhookEvent = async (req, res) => {
+    const { eventName, data } = req.body;
+
+    if (!eventName || !data) {
+        return res.status(400).json({ message: "Event name and data are required" });
+    }
+
+    console.log(`Received webhook event: ${eventName}`, data);
+
+    try {
+        // Determine the URL to trigger based on the event name
+        let url;
+        if (eventName === "user.order.created") {
+            url = "http://localhost:3000/api/user-order";
+        } else if (eventName === "vendor.order.created") {
+            url = "http://localhost:3000/api/vendor-order";
+        } else {
+            return res.status(400).json({ message: "Unknown event type" });
+        }
+
+        // Send request to the determined URL
+        await axios.post(url, data);
+
+        // Notify all connected WebSocket clients about the event
+        notifyClients({ eventName, data });
+
+        res.status(200).json({ message: "Webhook handled and event triggered successfully" });
+    } catch (error) {
+        console.error("Error handling webhook event:", error.message);
+        res.status(500).json({ message: "Failed to handle webhook event" });
+    }
+};
+
+// Trigger webhook event manually for testing
+const triggerWebhook = async (req, res) => {
+    const payload = {
+        eventName: req.body.eventName,
+        data: {
+            message: req.body.message || "Hello, this is a webhook event!",
+            timestamp: new Date().toISOString(),
+        },
+    };
+
+    try {
+        await axios.post('http://localhost:3000/webhook', payload);
+        res.status(200).json({ message: "Webhook triggered successfully" });
+    } catch (error) {
+        console.error("Error triggering webhook:", error);
+        res.status(500).json({ message: "Failed to trigger webhook" });
+    }
+};
+
+module.exports = {
+    handleWebhookEvent,
+    triggerWebhook,
+    setupWebSocket,
+};
+
+
+// const Webhook = require("../model/webhookModel");
+// const VendorOrderController = require("./vendorOrderController");
+// const { assignOrderToDriver } = require('./orderAssignmentController');
+// const { notifyWebhooks } = require('../utils/webhookNotifier'); // Import the notifier
+
+// const createVendorOrderFromWebhook = async (req, res) => {
+//     const { orderId } = req.body;
+
+//     if (!orderId) {
+//         return res.status(400).json({ message: "Order ID is required" });
+//     }
+
+//     try {
+//         // Save webhook event
+//         const webhookEvent = new Webhook({
+//             eventType: "OrderCreated",
+//             payload: req.body,
+//         });
+//         await webhookEvent.save();
+
+//         console.log('Webhook received. Payload:', req.body);
+
+//         // Trigger vendor order creation
+//         const result = await VendorOrderController.createVendorOrders({ params: { orderId } }, res);
+
+//         // If the response has already been sent, don't send another
+//         if (!res.headersSent) {
+//             res.status(200).json({ message: "Vendor order webhook processed successfully", result });
+//         }
+//     } catch (error) {
+//         console.error("Error processing webhook:", error.message);
+//         res.status(500).json({ message: "Failed to process webhook" });
+//     }
+// };
+
+// const updateOrderStatusWebhook = async (req, res) => {
+//     console.log("Webhook function hit."); // Debug line
+//     const { orderId, status } = req.body;
+
+//     if (!orderId || !status) {
+//         return res.status(400).json({ message: "Order ID and status are required" });
+//     }
+
+//     try {
+//         // Save webhook event
+//         const webhookEvent = new Webhook({
+//             eventType: "OrderStatusUpdated",
+//             payload: req.body,
+//         });
+//         await webhookEvent.save();
+
+//         console.log('Webhook received for order status update. Payload:', req.body);
+
+//         // Check if the order status is confirmed
+//         if (status === 'Confirmed') {
+//             // Notify all relevant webhooks
+//             await notifyWebhooks("order.status.update", { orderId, status });
+//             // Trigger order assignment to a driver
+//             await assignOrderToDriver({ params: { orderId } }, res);
+//         } else {
+//             res.status(200).json({ message: "Order status received, no action taken" });
+//         }
+//     } catch (error) {
+//         console.error("Error processing webhook:", error.message);
+//         res.status(500).json({ message: "Failed to process webhook" });
+//     }
+// };
+
+
+// module.exports = {
+//     createVendorOrderFromWebhook,
+//     updateOrderStatusWebhook,
+// };
+
+// // const Webhook = require("../model/webhookModel");
+// // const VendorOrder = require("../model/vendorOrderModel");
+// // const Order = require('../model/orderModel');
+// // const mongoose = require('mongoose');
+// // const { notifyWebhooks } = require('../utils/webhookNotifier');
+// // const { assignOrderToDriver } = require('./orderAssignmentController');
+// // const VendorOrderController = require('./vendorOrderController'); // Import vendor order controller
+
+// // const registerWebhook = async (req, res) => {
+// //     const { url, events } = req.body;
+
+// //     if (!url || !events || !Array.isArray(events)) {
+// //         return res.status(400).json({ message: "URL and events are required" });
+// //     }
+
+// //     try {
+// //         const newWebhook = new Webhook({ url, events });
+// //         await newWebhook.save();
+// //         res.status(201).json({ message: "Webhook registered successfully", webhook: newWebhook });
+// //     } catch (error) {
+// //         console.error("Error registering webhook:", error);
+// //         res.status(500).json({ message: "Failed to register webhook" });
+// //     }
+// // };
+// // const createVendorOrderFromWebhook = async (orderId) => { 
+// //     if (!orderId) {
+// //         throw new Error("Order ID is required");
+// //     }
+
+// //     try {
+// //         // Assuming you want to save the webhook URL as part of the payload
+// //         const webhook = await Webhook.findOne(); // Adjust this to find your webhook if you have multiple
+// //         if (!webhook) {
+// //             throw new Error("Webhook not found");
+// //         }
+
+// //         // Save webhook event with the retrieved URL
+// //         const webhookEvent = new Webhook({
+// //             eventType: "OrderCreated",
+// //             payload: { orderId, url: webhook.url }, // Ensure you are including the URL in the payload
+// //         });
+// //         await webhookEvent.save();
+
+// //         console.log('Webhook received for OrderCreated event. Payload:', { orderId });
+
+// //         // Trigger vendor order creation through the createVendorOrders function
+// //         const result = await VendorOrderController.createVendorOrders({ params: { orderId } });
+
+// //         return { message: "Vendor order created successfully", result };
+
+// //     } catch (error) {
+// //         console.error("Error processing webhook:", error.message);
+// //         throw new Error("Failed to process webhook");
+// //     }
+// // };
+
+// // const updateOrderStatusWebhook = async (req, res) => {
+// //     console.log("Webhook function hit."); // Debug line
+// //     const { orderId, status } = req.body;
+
+// //     if (!orderId || !status) {
+// //         return res.status(400).json({ message: "Order ID and status are required" });
+// //     }
+
+// //     try {
+// //         // Save webhook event
+// //         const webhookEvent = new Webhook({
+// //             eventType: "OrderStatusUpdated",
+// //             payload: req.body,
+// //         });
+// //         await webhookEvent.save();
+
+// //         console.log('Webhook received for order status update. Payload:', req.body);
+
+// //         if (status === 'Confirmed') {
+// //             // Notify relevant webhooks and assign a driver
+// //             await notifyWebhooks("order.status.update", { orderId, status });
+// //             await assignOrderToDriver({ params: { orderId } });
+// //             res.status(200).json({ message: "Order status updated and driver assigned" });
+// //         } else {
+// //             res.status(200).json({ message: "Order status received, no action taken" });
+// //         }
+// //     } catch (error) {
+// //         console.error("Error processing webhook:", error.message);
+// //         res.status(500).json({ message: "Failed to process webhook" });
+// //     }
+// // };
+
+// // module.exports = {
+// //     createVendorOrderFromWebhook,
+// //     updateOrderStatusWebhook,
+// //     registerWebhook,
+// // };
+
+
+
+// Trigger webhook to create vendor orders
+console.log(`Triggering webhook for order ID: ${savedOrder._id}`);
+console.log('Webhook URL:', process.env.WEBHOOK_URL);
+
+await axios.post(`${process.env.WEBHOOK_URL}/trigger-webhook`, {
+  eventName: "order.created",
+  data: {
+    orderId: savedOrder._id,
+    userId,
+    items,
+  },
+});
+
+console.log("Webhook triggered successfully.");
+
+res.status(201).json({
+  message: "Order created successfully",
+  order: {
+    ...savedOrder.toObject(),
+    user: userDetails,
+  },
+});
+} catch (error) {
+console.error("Order creation failed:", error.message);
+
+// Log the error details if it’s an Axios error
+if (error.response) {
+  console.log('Error Response Data:', error.response.data);
+  console.log('Error Status Code:', error.response.status);
+  console.log('Error Headers:', error.response.headers);
+}
+
+if (session.inTransaction()) {
+  await session.abortTransaction();
+}
+
+res.status(500).json({ message: "Order creation failed", error: error.message });
+} finally {
+session.endSession();
+}
+};

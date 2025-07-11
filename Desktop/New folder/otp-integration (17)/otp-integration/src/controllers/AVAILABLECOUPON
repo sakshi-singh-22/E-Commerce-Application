@@ -1,0 +1,867 @@
+
+// const getAvailableDiscounts = async (req, res) => {
+//   try {
+//     // Find the user's cart
+//     const cart = await Cart.findOne({ user: req.user.id });
+//     if (!cart) {
+//       return res.status(404).json({ message: 'Cart not found', success: false });
+//     }
+
+//     // Extract product IDs from cart items
+//     const cartProductIds = cart.items.map(item => item.productId);
+
+//     // Fetch full product details
+//     const products = await Product.find({ _id: { $in: cartProductIds } });
+
+//     // Map product details to cart items
+//     cart.items = cart.items.map(item => {
+//       const product = products.find(p => p._id.toString() === item.productId.toString());
+//       return {
+//         ...item,
+//         productId: product, // Attach the full product details
+//       };
+//     });
+
+//     // Extract categories, subcategories, brands, and product IDs from cart items
+//     const categories = [...new Set(cart.items.map(item => item.productId.category))];
+//     const subcategories = [...new Set(cart.items.map(item => item.productId.subcategory))];
+//     const brands = [...new Set(cart.items.map(item => item.productId.brandName))];
+//     const productIds = [...new Set(cart.items.map(item => item.productId._id.toString()))];
+
+//     // Fetch available coupons for these criteria
+//     const availableCoupons = await CouponService.getCouponsForCategories(categories, subcategories, brands, productIds);
+
+//     // Check if any coupon is applicable to the cart items
+//     const applicableCoupons = availableCoupons.filter(coupon => {
+//       if (coupon.applyToAllCart) {
+//         // Coupon applies to all items
+//         return true;
+//       }
+
+//       // Ensure coupon properties exist and are arrays
+//       const applicableCategories = coupon.applicableCategories || [];
+//       const applicableSubcategories = coupon.applicableSubcategories || [];
+//       const applicableBrands = coupon.applicableBrands || [];
+//       const applicableProducts = coupon.applicableProducts || [];
+
+//       const isApplicable = (
+//         (categories.length > 0 && applicableCategories.length > 0 && applicableCategories.some(cat => categories.includes(cat))) ||
+//         (subcategories.length > 0 && applicableSubcategories.length > 0 && applicableSubcategories.some(sub => subcategories.includes(sub))) ||
+//         (brands.length > 0 && applicableBrands.length > 0 && applicableBrands.some(brand => brands.includes(brand))) ||
+//         (productIds.length > 0 && applicableProducts.length > 0 && applicableProducts.some(prodId => productIds.includes(prodId)))
+//       );
+
+//       return isApplicable;
+//     });
+
+//     // Respond with applicable coupons
+//     res.status(200).json({ success: true, coupons: applicableCoupons });
+//   } catch (error) {
+//     console.error('Error fetching available discounts:', error);
+//     res.status(500).json({ message: 'Server error', success: false });
+//   }
+// };
+
+
+// module.exports = {
+    
+//     getAvailableDiscounts
+//   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const createOrder = async (req, res, next) => {
+//   const { checkoutId } = req.body;
+
+//   try {
+//     const checkout = await Checkout.findById(checkoutId).populate('userId').exec();
+
+//     if (!checkout) {
+//       return res.status(404).json({ message: 'Checkout not found', success: false });
+//     }
+
+//     // Create the order using the checkout details
+//     const order = new Order({
+//       user: checkout.userId._id,
+//       items: checkout.orderDetails.items,
+//       deliveryFee: checkout.orderDetails.deliveryFee,
+//       handlingCharge: checkout.orderDetails.handlingCharge,
+//       gstAmount: checkout.orderDetails.gstAmount,
+//       totalCost: checkout.orderDetails.totalCost,
+//       discount: checkout.discount || 0,
+//       discountDetails: checkout.couponDetails,
+//       payableAmount: checkout.payableAmount,
+//       paymentMethod: checkout.paymentMethod,
+//       status: 'Pending',
+//     });
+
+//     await order.save();
+
+//     res.status(201).json({
+//       success: true,
+//       message: 'Order created successfully',
+//       order: {
+//         _id: order._id,
+//         user: {
+//           _id: checkout.userId._id,
+//           name: checkout.userId.name,
+//           email: checkout.userId.email,
+//           phone: checkout.userId.phone,
+//           address: checkout.userId.address
+//         },
+//         items: order.items,
+//         deliveryFee: order.deliveryFee,
+//         handlingCharge: order.handlingCharge,
+//         gstAmount: order.gstAmount,
+//         totalCost: order.totalCost,
+//         discount: order.discount,
+//         discountDetails: order.discountDetails,
+//         payableAmount: order.payableAmount,
+//         paymentMethod: order.paymentMethod,
+//         status: order.status,
+//         createdAt: order.createdAt,
+//         updatedAt: order.updatedAt
+//       }
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const mongoose = require("mongoose");
+// const Cart = require("../model/cartModel");
+// const Order = require("../model/orderModel");
+// const Checkout = require("../model/checkoutModel");
+// const Webhook = require('../model/webhookModel');
+// const axios = require('axios'); // For making HTTP requests
+
+// const notifyWebhooks = async (event, data) => {
+//   try {
+//     const webhooks = await Webhook.find({ events: event });
+//     const requests = webhooks.map(webhook => axios.post(webhook.url, data));
+//     await Promise.all(requests);
+//   } catch (error) {
+//     console.error('Error notifying webhooks:', error.message);
+//   }
+// };
+// const createOrder = async (req, res) => {
+//   const { checkoutId } = req.body;
+
+//   try {
+//     const checkout = await Checkout.findById(checkoutId);
+//     if (!checkout) {
+//       return res.status(404).json({ success: false, message: 'Checkout not found' });
+//     }
+
+//     const order = new Order({
+//       user: checkout.userId,
+//       items: checkout.orderDetails.items,
+//       deliveryFee: checkout.orderDetails.deliveryFee,
+//       handlingCharge: checkout.orderDetails.handlingCharge,
+//       gstAmount: checkout.orderDetails.gstAmount,
+//       totalCost: checkout.orderDetails.totalCost,
+//       discount: checkout.orderDetails.discount || 0,
+//       discountDetails: checkout.orderDetails.discountDetails || {},
+//       payableAmount: checkout.payableAmount,
+//       paymentMethod: checkout.paymentMethod,
+//       status: 'Pending',
+//       userDetails: checkout.userDetails
+//     });
+
+//     await order.save();
+
+//     // Empty the cart after the order is placed
+//     await Cart.findByIdAndUpdate(checkout.cartId, { $set: { items: [] } });
+
+//     res.status(201).json({
+//       success: true,
+//       message: 'Order created successfully',
+//       order
+//     });
+//   } catch (error) {
+//     console.error('Error creating order:', error);
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
+
+
+// // Update Order Status
+// const updateOrderStatus = async (req, res) => {
+//   try {
+//     const { orderId, status } = req.body;
+//     if (!orderId || !status) {
+//       return res
+//         .status(400)
+//         .json({ message: "Order ID and status are required", success: false });
+//     }
+//     const validStatuses = [
+//       "Pending",
+//       "Confirmed",
+//       "Shipped",
+//       "Delivered",
+//       "Cancelled",
+//     ];
+//     if (!validStatuses.includes(status)) {
+//       return res
+//         .status(400)
+//         .json({ message: "Invalid status", success: false });
+//     }
+//     const order = await Order.findByIdAndUpdate(
+//       orderId,
+//       { status },
+//       { new: true }
+//     ).populate("items.productId");
+//     if (!order) {
+//       return res
+//         .status(404)
+//         .json({ message: "Order not found", success: false });
+//     }
+
+//     // Notify webhooks about the order status update
+//     await notifyWebhooks('order_status_updated', { orderId, status });
+
+//     res.status(200).json({ success: true, order });
+//   } catch (error) {
+//     console.error("Error updating order status:", error);
+//     res.status(500).json({ message: "Server error", success: false });
+//   }
+// };
+
+// const cancelOrder = async (req, res) => {
+//   const { orderId } = req.body;
+//   if (!orderId) {
+//     return res
+//       .status(400)
+//       .json({ message: "Order ID is required", success: false });
+//   }
+
+//   const session = await mongoose.startSession();
+//   session.startTransaction(); // Start a transaction session
+
+//   try {
+//     // Fetch the order to cancel
+//     const order = await Order.findById(orderId).session(session);
+//     if (!order) {
+//       await session.abortTransaction();
+//       session.endSession();
+//       return res
+//         .status(404)
+//         .json({ message: "Order not found", success: false });
+//     }
+
+//     if (order.status === "Shipped") {
+//       await session.abortTransaction();
+//       session.endSession();
+//       return res.status(400).json({
+//         message: "Order cannot be canceled as it has already been shipped",
+//         success: false,
+//       });
+//     }
+
+//     if (order.status === "Cancelled") {
+//       await session.abortTransaction();
+//       session.endSession();
+//       return res.status(400).json({
+//         message: "Order is already canceled and cannot be canceled again",
+//         success: false,
+//       });
+//     }
+
+//     // Restore product quantities
+//     for (const item of order.items) {
+//       const product = await Product.findOne({
+//         productId: item.productId,
+//       }).session(session);
+//       if (!product) {
+//         throw new Error(`Product with ID ${item.productId} not found`);
+//       }
+
+//       // Find the specific variant
+//       const productVariant = product.variants.find(
+//         (v) => v.variantSKU === item.variant.variantSKU
+//       );
+//       if (!productVariant) {
+//         throw new Error(
+//           `Variant with SKU ${item.variant.variantSKU} not found`
+//         );
+//       }
+
+//       // Restore the product variant quantity
+//       productVariant.quantity += item.quantity; // Increase stock back
+//       await product.save({ session }); // Save product changes within the transaction
+//     }
+
+//     // Preserve required fields and update order status to 'Cancelled'
+//     order.status = "Cancelled";
+//     order.deliveryFee = order.deliveryFee || 0;
+//     order.handlingCharge = order.handlingCharge || 0;
+//     order.gstAmount = order.gstAmount || 0;
+//     order.totalCost = order.totalCost || 0;
+
+//     await order.save({ session });
+//     await session.commitTransaction(); // Commit the transaction
+//     session.endSession(); // End the session
+
+//     // Notify webhooks about the order cancellation
+//     await notifyWebhooks('order_cancelled', { orderId });
+
+//     res
+//       .status(200)
+//       .json({ message: "Order canceled successfully", success: true });
+//   } catch (error) {
+//     await session.abortTransaction(); // Abort the transaction in case of an error
+//     session.endSession(); // End the session
+//     console.error("Error canceling order:", error.message);
+//     res.status(500).json({ message: "Server error", success: false });
+//   }
+// };
+
+// const getOrderHistory = async (req, res) => {
+//   try {
+//     // Fetch the user's ID from the authenticated request
+//     const userId = req.user.id;
+
+//     // Fetch all orders associated with the user, sorted by creation date
+//     const orders = await Order.find({ user: userId })
+//       .sort({ createdAt: -1 }) // Sort orders by most recent first
+//       .populate("items.productId") // Populate the product details in each item
+//       .exec();
+
+//     // If no orders are found, return a 404 response
+//     if (!orders || orders.length === 0) {
+//       return res.status(404).json({ message: "No orders found", success: false });
+//     }
+
+//     // Return the fetched orders in the response
+//     res.status(200).json({
+//       success: true,
+//       orders: orders.map(order => ({
+//         _id: order._id,
+//         items: order.items.map(item => ({
+//           productId: item.productId._id,
+//           productName: item.productId.name,
+//           variant: item.variant,
+//           quantity: item.quantity,
+//           sellingPrice: item.sellingPrice,
+//           totalPrice: item.totalProductPrice ,
+//         })),
+//         totalAmount: order.totalAmount,
+//         status: order.status,
+//         createdAt: order.createdAt,
+//       })),
+//     });
+//   } catch (error) {
+//     console.error("Error fetching order history:", error);
+//     res.status(500).json({ message: "Failed to fetch order history", error: error.message });
+//   }
+// };
+
+// const reOrder = async (req, res) => {
+//   const { orderId } = req.body;
+
+//   try {
+//     // Fetch the order based on the orderId
+//     const order = await Order.findById(orderId);
+
+//     if (!order) {
+//       return res.status(404).send({ message: "Order not found" });
+//     }
+
+//     // Fetch product details for price calculations
+//     const cartItems = await Promise.all(
+//       order.items.map(async (item) => {
+//         const product = await Product.findOne({ productId: item.productId });
+//         if (!product) {
+//           throw new Error(`Product with ID ${item.productId} not found`);
+//         }
+
+//         // Find the specific variant
+//         const productVariant = product.variants.find(
+//           (v) => v.variantSKU === item.variant.variantSKU
+//         );
+//         if (!productVariant) {
+//           throw new Error(`Variant with SKU ${item.variant.variantSKU} not found`);
+//         }
+
+//         // Calculate the payable amount based on the variant's selling price
+//         const payableAmount = productVariant.sellingPrice * item.quantity;
+
+//         return {
+//           productId: item.productId,
+//           quantity: item.quantity,
+//           payableAmount: payableAmount,
+//           variant: {
+//             color: productVariant.color,
+//             size: productVariant.size,
+//             variantSKU: productVariant.variantSKU,
+//             sellingPrice: productVariant.sellingPrice,
+//             mrp: productVariant.mrp,
+//             quantity: item.quantity
+//           }
+//         };
+//       })
+//     );
+
+//     // Calculate total payable amount
+//     const totalPayableAmount = cartItems.reduce((acc, item) => acc + item.payableAmount, 0);
+
+//     // Create and save the new cart with payment method and status
+//     const newCart = new Cart({
+//       user: order.user, // Ensure user ID is available
+//       items: cartItems,
+//       payableAmount: totalPayableAmount,
+//       paymentMethod: order.paymentMethod, // Include the payment method from the original order
+//       status: "Pending" // Set status to "Pending" for the new cart
+//     });
+
+//     const savedCart = await newCart.save();
+
+//     // Respond with the new cart
+//     res.status(201).send({
+//       message: "Cart created successfully",
+//       cart: {
+//         user: savedCart.user,
+//         items: savedCart.items,
+//         payableAmount: savedCart.payableAmount,
+//         paymentMethod: savedCart.paymentMethod, // Include payment method in response
+//         status: savedCart.status, // Include status in response
+//         _id: savedCart._id,
+//         createdAt: savedCart.createdAt,
+//         updatedAt: savedCart.updatedAt,
+//         __v: savedCart.__v
+//       }
+//     });
+//   } catch (error) {
+//     console.error("Error reordering:", error);
+//     res.status(500).send({ message: "Failed to reorder", error: error.message });
+//   }
+// };
+
+// module.exports = {
+//   createOrder,
+//   updateOrderStatus,
+//   cancelOrder,
+//   getOrderHistory,
+//   reOrder
+// };
+
+
+  
+
+
+
+
+
+
+
+
+
+
+const mongoose = require("mongoose");
+const Cart = require("../model/cartModel");
+const Order = require("../model/orderModel");
+const Product = require("../model/productmodel");
+const User = require("../model/authmodel");
+const CouponService = require('../services/couponService'); 
+
+const createOrder = async (req, res) => {
+  const { cartId, couponCode } = req.body;
+
+  try {
+    // Fetch the user's cart
+    const cart = await Cart.findOne({ user: req.user.id, _id: cartId });
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found', success: false });
+    }
+
+    // Fetch product details for items in the cart
+    const productIds = cart.items.map(item => item.productId);
+    const products = await Product.find({ productId: { $in: productIds } });
+
+    // Map product details to cart items and check for validity
+    const updatedCartItems = await Promise.all(cart.items.map(async (item) => {
+      const product = products.find(p => p.productId === item.productId);
+      if (product) {
+        const productVariant = product.variants.find(v => v.variantSKU === item.variant.variantSKU);
+        if (productVariant) {
+          return {
+            productId: product.productId, // Use new formatted product ID if needed
+            productName: product.name,
+            brand: product.brandName, // Assuming brandName is the brand field
+            variant: {
+              variantSKU: productVariant.variantSKU,
+              weight: productVariant.weight,
+              sellingPrice: productVariant.sellingPrice,
+              // Add any other variant details you need here
+            },
+            quantity: item.quantity,
+            unitPrice: productVariant.sellingPrice,
+            totalProductPrice: productVariant.sellingPrice * item.quantity,
+            productImageURL: productVariant.imageURL || '', // Assuming imageURL field exists
+          };
+        }
+      }
+      return null; // Mark as invalid if product or variant not found
+    }));
+
+    // Filter out invalid cart items
+    const validCartItems = updatedCartItems.filter(item => item !== null);
+
+    if (validCartItems.length === 0) {
+      return res.status(400).json({ message: 'Cart contains invalid or missing products', success: false });
+    }
+
+    // Calculate total price
+    let totalPrice = validCartItems.reduce((sum, item) => sum + item.totalProductPrice, 0);
+
+    // Initialize discount and details
+    let discount = 0;
+    let discountDetails = null;
+
+    // Apply coupon if provided
+    if (couponCode) {
+      const coupon = await CouponService.getCouponByCode(couponCode);
+      if (!coupon) {
+        return res.status(400).json({ message: 'Invalid or expired coupon', success: false });
+      }
+
+      const discountResult = await CouponService.applyDiscount(coupon, validCartItems.map(item => ({
+        sellingPrice: item.unitPrice,
+        quantity: item.quantity,
+      })));
+
+      if (!discountResult.success) {
+        return res.status(400).json({ message: discountResult.message, success: false });
+      }
+
+      discount = discountResult.discount;
+      discountDetails = {
+        code: coupon.code,
+        discountType: coupon.discountType,
+        discountValue: coupon.discountValue,
+        expirationDate: coupon.expirationDate,
+      };
+    }
+
+    // Calculate additional charges and total amounts
+    const deliveryFee = 1.50;
+    const handlingCharge = 10.00;
+    const gstRate = 0.18;
+    const gstAmount = totalPrice * gstRate;
+    const totalCost = totalPrice + deliveryFee + handlingCharge + gstAmount;
+    const payableAmount = totalCost - discount;
+
+    // Round values to two decimal places
+    const roundToTwoDecimalPlaces = number => parseFloat(number.toFixed(2));
+    const roundedTotalPrice = roundToTwoDecimalPlaces(totalPrice);
+    const roundedGstAmount = roundToTwoDecimalPlaces(gstAmount);
+    const roundedTotalCost = roundToTwoDecimalPlaces(totalCost);
+    const roundedPayableAmount = roundToTwoDecimalPlaces(payableAmount);
+
+    // Create order
+    const order = new Order({
+      user: req.user.id,
+      items: validCartItems,
+      totalAmount: roundedTotalPrice,
+      payableAmount: roundedPayableAmount,
+      paymentMethod: 'COD', // Assuming COD is default; update if needed
+      status: 'Pending',
+    });
+
+    await order.save();
+
+    // Send response
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully',
+      order: {
+        ...order.toObject(),
+        discountDetails,
+        deliveryFee: roundToTwoDecimalPlaces(deliveryFee),
+        handlingCharge: roundToTwoDecimalPlaces(handlingCharge),
+        gstAmount: roundedGstAmount,
+        totalCost: roundedTotalCost,
+        payableAmount: roundedPayableAmount,
+      },
+    });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ message: 'Server error', success: false });
+  }
+};
+
+// Update Order Status
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId, status } = req.body;
+    if (!orderId || !status) {
+      return res
+        .status(400)
+        .json({ message: "Order ID and status are required", success: false });
+    }
+    const validStatuses = [
+      "Pending",
+      "Confirmed",
+      "Shipped",
+      "Delivered",
+      "Cancelled",
+    ];
+    if (!validStatuses.includes(status)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid status", success: false });
+    }
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    ).populate("items.productId");
+    if (!order) {
+      return res
+        .status(404)
+        .json({ message: "Order not found", success: false });
+    }
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).json({ message: "Server error", success: false });
+  }
+};
+const cancelOrder = async (req, res) => {
+  const { orderId } = req.body;
+  if (!orderId) {
+    return res
+      .status(400)
+      .json({ message: "Order ID is required", success: false });
+  }
+  const session = await mongoose.startSession();
+  session.startTransaction(); // Start a transaction session
+  try {
+    // Fetch the order to cancel
+    const order = await Order.findById(orderId).session(session);
+    if (!order) {
+      await session.abortTransaction();
+      session.endSession();
+      return res
+        .status(404)
+        .json({ message: "Order not found", success: false });
+    }
+    if (order.status === "Shipped") {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({
+        message: "Order cannot be canceled as it has already been shipped",
+        success: false,
+      });
+    }
+    if (order.status === "Cancelled") {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({
+        message: "Order is already canceled and cannot be canceled again",
+        success: false,
+      });
+    }
+    // Restore product quantities
+    for (const item of order.items) {
+      const product = await Product.findOne({
+        productId: item.productId,
+      }).session(session);
+      if (!product) {
+        throw new Error(`Product with ID ${item.productId} not found`);
+      }
+      // Find the specific variant
+      const productVariant = product.variants.find(
+        (v) => v.variantSKU === item.variant.variantSKU
+      );
+      if (!productVariant) {
+        throw new Error(
+          `Variant with SKU ${item.variant.variantSKU} not found`
+        );
+      }
+      // Restore the product variant quantity
+      productVariant.quantity += item.quantity; // Increase stock back
+      await product.save({ session }); // Save product changes within the transaction
+    }
+    // Update order status to 'Cancelled'
+    order.status = "Cancelled";
+    await order.save({ session });
+    await session.commitTransaction(); // Commit the transaction
+    session.endSession(); // End the session
+    res
+      .status(200)
+      .json({ message: "Order canceled successfully", success: true });
+  } catch (error) {
+    await session.abortTransaction(); // Abort the transaction in case of an error
+    session.endSession(); // End the session
+    console.error("Error canceling order:", error.message);
+    res.status(500).json({ message: "Server error", success: false });
+  }
+};
+
+const getOrderHistory = async (req, res) => {
+  try {
+    // Fetch the user's ID from the authenticated request
+    const userId = req.user.id;
+
+    // Fetch all orders associated with the user, sorted by creation date
+    const orders = await Order.find({ user: userId })
+      .sort({ createdAt: -1 }) // Sort orders by most recent first
+      .populate("items.productId") // Populate the product details in each item
+      .exec();
+
+    // If no orders are found, return a 404 response
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: "No orders found", success: false });
+    }
+
+    // Return the fetched orders in the response
+    res.status(200).json({
+      success: true,
+      orders: orders.map(order => ({
+        _id: order._id,
+        items: order.items.map(item => ({
+          productId: item.productId._id,
+          productName: item.productId.name,
+          variant: item.variant,
+          quantity: item.quantity,
+          sellingPrice: item.sellingPrice,
+          totalPrice: item.totalPrice,
+        })),
+        totalAmount: order.totalAmount,
+        status: order.status,
+        createdAt: order.createdAt,
+      })),
+    });
+  } catch (error) {
+    console.error("Error fetching order history:", error);
+    res.status(500).json({ message: "Failed to fetch order history", error: error.message });
+  }
+};
+const reOrder = async (req, res) => {
+  const { orderId } = req.body;
+
+  try {
+    // Fetch the order based on the orderId
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    // Fetch product details for price calculations
+    const cartItems = await Promise.all(
+      order.items.map(async (item) => {
+        const product = await Product.findOne({ productId: item.productId });
+        if (!product) {
+          throw new Error(`Product with ID ${item.productId} not found`);
+        }
+
+        // Find the specific variant
+        const productVariant = product.variants.find(
+          (v) => v.variantSKU === item.variant.variantSKU
+        );
+        if (!productVariant) {
+          throw new Error(`Variant with SKU ${item.variant.variantSKU} not found`);
+        }
+
+        // Calculate the payable amount based on the variant's selling price
+        const payableAmount = productVariant.sellingPrice * item.quantity;
+
+        return {
+          productId: item.productId,
+          quantity: item.quantity,
+          payableAmount: payableAmount,
+          variant: {
+            color: productVariant.color,
+            size: productVariant.size,
+            variantSKU: productVariant.variantSKU,
+            sellingPrice: productVariant.sellingPrice,
+            mrp: productVariant.mrp,
+            quantity: item.quantity
+          }
+        };
+      })
+    );
+
+    // Calculate total payable amount
+    const totalPayableAmount = cartItems.reduce((acc, item) => acc + item.payableAmount, 0);
+
+    // Create and save the new cart with payment method and status
+    const newCart = new Cart({
+      user: order.user, // Ensure user ID is available
+      items: cartItems,
+      payableAmount: totalPayableAmount,
+      paymentMethod: order.paymentMethod, // Include the payment method from the original order
+      status: "Pending" // Set status to "Pending" for the new cart
+    });
+
+    const savedCart = await newCart.save();
+
+    // Respond with the new cart
+    res.status(201).send({
+      message: "Cart created successfully",
+      cart: {
+        user: savedCart.user,
+        items: savedCart.items,
+        payableAmount: savedCart.payableAmount,
+        paymentMethod: savedCart.paymentMethod, // Include payment method in response
+        status: savedCart.status, // Include status in response
+        _id: savedCart._id,
+        createdAt: savedCart.createdAt,
+        updatedAt: savedCart.updatedAt,
+        __v: savedCart.__v
+      }
+    });
+  } catch (error) {
+    console.error("Error reordering:", error);
+    res.status(500).send({ message: "Failed to reorder", error: error.message });
+  }
+};
+
+
+
+module.exports = {
+  createOrder,
+  updateOrderStatus,
+  cancelOrder,
+  getOrderHistory,
+  reOrder
+};

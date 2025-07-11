@@ -1,0 +1,322 @@
+{
+    "info": {
+        "_postman_id": "19fd2f30-3d61-4dbb-8087-00321acabece",
+        "name": "PRODUCT-VENDOR",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Create-product",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/products",
+                    "path": [
+                        "api",
+                        "products"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"name\": \"Sample Product\",\r\n  \"sellingPrice\": 100,\r\n  \"mrp\": 120,\r\n  \"description\": \"This is a sample product description.\",\r\n  \"images\": [\"image1.jpg\", \"image2.jpg\"],\r\n  \"category\": {\r\n    \"name\": \"Electronics\",\r\n    \"subcategories\": [\r\n      { \"name\": \"Mobile\" },\r\n      { \"name\": \"Accessories\" }\r\n    ]\r\n  },\r\n  \"subcategory\": \"Mobile\",\r\n  \"brandName\": \"BrandX\",\r\n  \"nutritionalInfo\": \"N/A\",\r\n  \"variants\": [\r\n    {\r\n      \"color\": \"Red\",\r\n      \"quantity\": 50,\r\n      \"variantSKU\": \"RED123\",\r\n      \"size\": \"M\",\r\n      \"sellingPrice\": 100,\r\n      \"mrp\": 120\r\n    },\r\n    {\r\n      \"color\": \"Blue\",\r\n      \"quantity\": 30,\r\n      \"variantSKU\": \"BLU123\",\r\n      \"size\": \"L\",\r\n      \"sellingPrice\": 100,\r\n      \"mrp\": 120\r\n    }\r\n  ]\r\n}"
+                }
+            }
+        },
+        {
+            "name": "Get All Products",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/products",
+                    "path": [
+                        "api",
+                        "products"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Get a Product by ID",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/66cdaae9c6ee0dd17407a046",
+                    "path": [
+                        "api",
+                        "products",
+                        "66cdaae9c6ee0dd17407a046"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Update a Product",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/66cdaae9c6ee0dd17407a046",
+                    "path": [
+                        "api",
+                        "products",
+                        "66cdaae9c6ee0dd17407a046"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"price\": 319,\r\n  \"description\": \"Updated description for the smartphone.\",\r\n  \"variants\": [\r\n    {\r\n      \"color\": \"Black\",\r\n      \"quantity\": 9,\r\n      \"variantSKU\": \"SKU12345\"\r\n    },\r\n    {\r\n      \"color\": \"White\",\r\n      \"quantity\": 0,\r\n      \"variantSKU\": \"SKU12346\"\r\n    }\r\n  ]\r\n}"
+                }
+            }
+        },
+        {
+            "name": "Delete a Product",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/66c5fc395be02706d2da7a67",
+                    "path": [
+                        "api",
+                        "products",
+                        "66c5fc395be02706d2da7a67"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Fetch-from-inventory",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/inventory/66cda572f2ff0e1af025852a",
+                    "path": [
+                        "api",
+                        "products",
+                        "inventory",
+                        "66cda572f2ff0e1af025852a"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"productId\" : \"66cda572f2ff0e1af025852a\"\n}"
+                }
+            }
+        },
+        {
+            "name": "BULK-upload",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/bulk-upload",
+                    "path": [
+                        "api",
+                        "products",
+                        "bulk-upload"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"products\": [{\"name\": \"Product A\",\"sellingPrice\": 120,\"mrp\": 180,\"description\": \"Description of Product A\",\"tags\": [\"electronics\", \"gadget\"],\"images\": [\"http://example.com/productA.jpg\"],\"category\": {\"name\": \"Electronics\",\"subcategories\": [{\"name\": \"Gadgets\"}]},\"subcategory\": \"Gadgets\",\"brandName\": \"TechBrand\",\"nutritionalInfo\": \"N/A\",\"vendorId\": \"64d5ec63a1fef6e8b5d12a73\",\"variants\": [{\"color\": \"Black\",\"quantity\": 15,\"variantSKU\": \"SKU321\",\"size\": \"Large\",\"sellingPrice\": 120,\"mrp\": 180},{\"color\": \"White\",\"quantity\": 25,\"variantSKU\": \"SKU322\",\"size\": \"Medium\",\"sellingPrice\": 120,\"mrp\": 180}]},{\"name\": \"Product B\",\"sellingPrice\": 80,\"mrp\": 120,\"description\": \"Description of Product B\",\"tags\": [\"home\", \"appliance\"],\"images\": [\"http://example.com/productB.jpg\"],\"category\": {\"name\": \"Home Appliances\",\"subcategories\": [{\"name\": \"Kitchen Appliances\"}]},\"subcategory\": \"Kitchen Appliances\",\"brandName\": \"HomeTech\",\"nutritionalInfo\": \"N/A\",\"vendorId\": \"64d5ec63a1fef6e8b5d12a74\",\"variants\": [{\"color\": \"Silver\",\"quantity\": 30,\"variantSKU\": \"SKU425\",\"size\": \"Standard\",\"sellingPrice\": 80,\"mrp\": 120}]}]}"
+                }
+            }
+        },
+        {
+            "name": "BULK-update",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/bulk-update",
+                    "path": [
+                        "api",
+                        "products",
+                        "bulk-update"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "[\r\n  {\r\n    \"_id\": \"66cda572f2ff0e1af0258528\",\r\n    \"updateData\": {\r\n      \"sellingPrice\": 120,\r\n      \"description\": \"Updated description for Product 1\"\r\n    }\r\n  },\r\n  {\r\n    \"_id\": \"66cda58ef2ff0e1af025852c\",\r\n    \"updateData\": {\r\n      \"mrp\": 260,\r\n      \"category\": {\r\n        \"name\": \"Updated Category\",\r\n        \"subcategories\": [{ \"name\": \"Updated Subcategory\" }]\r\n      }\r\n    }\r\n  }\r\n]"
+                }
+            }
+        },
+        {
+            "name": "BULK-delete",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/bulk-delete",
+                    "path": [
+                        "api",
+                        "products",
+                        "bulk-delete"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"productIds\": [\"66cda572f2ff0e1af0258524\"]\r\n}"
+                }
+            }
+        },
+        {
+            "name": "delete-variant",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:3001/api/products/delete-variants",
+                    "path": [
+                        "api",
+                        "products",
+                        "delete-variants"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZW5kb3IiOnsiaWQiOiI2NmM0NjQxOGEyNzRmNzkzNGYzYzQwN2UifSwiaWF0IjoxNzI0NjcwMzkzLCJleHAiOjE3MjcyNjIzOTN9.AMnr96mtLL3xuz03uc8aL-ORB0jWQ9NumVNzO89Dslg"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\r\n  \"productId\": \"66cda572f2ff0e1af0258528\",\r\n  \"variantSKUs\": [\"SKU124\"]\r\n}"
+                }
+            }
+        }
+    ]
+}

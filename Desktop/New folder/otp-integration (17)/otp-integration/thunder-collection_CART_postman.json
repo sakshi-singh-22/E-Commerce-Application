@@ -1,0 +1,248 @@
+{
+    "info": {
+        "_postman_id": "83720b16-be96-49e7-a413-38865328d4d1",
+        "name": "CART",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Create-CART/GET-cart",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/carts",
+                    "path": [
+                        "api",
+                        "carts"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxODc0OCwiZXhwIjoxNzI4OTEwNzQ4fQ.F_sJJyIzx4ARmT_2NgyGaJaNZywEI9YVzur-BHunUDU"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n \"userId\": \"66d01cd0482c844fb793cb87\" \n}"
+                }
+            }
+        },
+        {
+            "name": "Add-item-CART",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/carts/add-item",
+                    "path": [
+                        "api",
+                        "carts",
+                        "add-item"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n   \"userId\": \"66d01cd0482c844fb793cb87\" ,\n  \"productId\": \"C47-S47-f0d05-8eab9\",\n  \"variant\": {\n    \"variantSKU\": \"Var_47\",\n    \"quantity\" : 1\n  }\n}"
+                }
+            }
+        },
+        {
+            "name": "Remove-Items",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/carts/remove-item",
+                    "path": [
+                        "api",
+                        "carts",
+                        "remove-item"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n   \"userId\": \"66d01cd0482c844fb793cb87\" ,\n  \"productId\": \"C14-S14-c58a8-07606\",\n  \n  \"variant\": {\n    \"variantSKU\": \"Var_14\"\n  }\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Update-items",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/carts/update-item",
+                    "path": [
+                        "api",
+                        "carts",
+                        "update-item"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n   \"userId\": \"66d01cd0482c844fb793cb87\" ,\n  \"productId\": \"C12-S12-c58a8-edf44\",\n  \"variant\": {\n    \"variantSKU\": \"VAR124\",\n    \"quantity\" : 4\n  }\n}"
+                }
+            }
+        },
+        {
+            "name": "Cart-summary",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/carts/summary",
+                    "path": [
+                        "api",
+                        "carts",
+                        "summary"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n   \"userId\": \"66d01cd0482c844fb793cb87\",\n   \"couponCode\": \"CARTWIDE2024\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "APPLYCOUPON",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/carts/apply-coupon",
+                    "path": [
+                        "api",
+                        "carts",
+                        "apply-coupon"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"couponCode\": \"CARTWIDE2024\"\n}\n\n"
+                }
+            }
+        },
+        {
+            "name": "AvailableCoupons",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/coupons/available",
+                    "path": [
+                        "api",
+                        "coupons",
+                        "available"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjODQzZTVlOGU3OWQ3NDJhNGMyYWIyIn0sImlhdCI6MTcyNDY1MDQ4MywiZXhwIjoxNzI3MjQyNDgzfQ.YA6Yh3jVYjlxTYbbyuCMtQsUqZNLzJrYXc6AIHSU-uQ",
+                        "disabled": true
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yzc2NDBmMGJiOWNmMDg5NGRmMWY0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNDY1Mzg3OSwiZXhwIjoxNzI0NjU3NDc5fQ.U_gUePR6zAT_G3iUapPBc_BnouD0e81i6_0bAthkT90",
+                        "disabled": true
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,444 @@
+{
+    "info": {
+        "_postman_id": "d5c29bdd-da26-4deb-b08d-0b1a25123fda",
+        "name": "ORDER",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "create-order",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/create",
+                    "path": [
+                        "api",
+                        "orders",
+                        "create"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n \"cartId\": \"66d722d6c4e886ff6fc4b722\",\n  \"locationId\": \"66f6a18a98c2a6b175cbd8e4\",\n  \"paymentMethod\": \"Cash on Delivery (COD)\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "place-order",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/update-status",
+                    "path": [
+                        "api",
+                        "orders",
+                        "update-status"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n \"orderId\" : \"6712431bcd04db48cbeb6486\",\n  \"status\": \"Confirmed\"\n}"
+                }
+            }
+        },
+        {
+            "name": "CancelRequest",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/cancel-order",
+                    "path": [
+                        "api",
+                        "orders",
+                        "cancel-order"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"orderId\" : \"66ff9366e910fcd7358407d4\"\n}"
+                }
+            }
+        },
+        {
+            "name": "OrderHistory",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/history",
+                    "path": [
+                        "api",
+                        "orders",
+                        "history"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n \"userId\": \"66d01cd0482c844fb793cb87\" \n}"
+                }
+            }
+        },
+        {
+            "name": "Re-Order",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/reOrder",
+                    "path": [
+                        "api",
+                        "orders",
+                        "reOrder"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"orderId\": \"66f24df95a3fdca4ad9ef16e\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Get All Locations",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/locations",
+                    "path": [
+                        "api",
+                        "orders",
+                        "locations"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlNTY4OTE3YThiNGM1ZWZiYTA3MGZhIn0sImlhdCI6MTcyNjMxMDU4MywiZXhwIjoxNzI4OTAyNTgzfQ.RCKTLak85gQPbmrSCnOP_AtwZfUSBeNvcOFqpsefdgw",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n \"userId\": \"66d01cd0482c844fb793cb87\" \n}"
+                }
+            }
+        },
+        {
+            "name": "Get All Payment Methods",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/payment-methods",
+                    "path": [
+                        "api",
+                        "orders",
+                        "payment-methods"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNTM2NDI4NywiZXhwIjoxNzI3OTU2Mjg3fQ.2Ug8AcfwP450sktK3MOxL8BOVNn8g_mUKBJUawWv6lA"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "vendor-history",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/vendororder/vendor/orders",
+                    "path": [
+                        "api",
+                        "vendororder",
+                        "vendor",
+                        "orders"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"vendorId\" :\"66cebf5bab3a9bd8f5fc58a8\"\n}"
+                }
+            }
+        },
+        {
+            "name": "VendorOrders",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3001/api/vendororder/vendor/orders/create/66ff9366e910fcd7358407d4",
+                    "path": [
+                        "api",
+                        "vendororder",
+                        "vendor",
+                        "orders",
+                        "create",
+                        "66ff9366e910fcd7358407d4"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                }
+            }
+        },
+        {
+            "name": "Accept-Vendor-Order",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/api/vendororder/vendor/orders/accept/671a3fad57fc71fe6fb98ac3",
+                    "path": [
+                        "api",
+                        "vendororder",
+                        "vendor",
+                        "orders",
+                        "accept",
+                        "671a3fad57fc71fe6fb98ac3"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                }
+            }
+        },
+        {
+            "name": " Reject Vendor Order",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/api/vendororder/vendor/orders/reject/66fa41ab2f22dae42e2faecf",
+                    "path": [
+                        "api",
+                        "vendororder",
+                        "vendor",
+                        "orders",
+                        "reject",
+                        "66fa41ab2f22dae42e2faecf"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"rejectionReason\" : \"Out-of-stock\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Update Vendor Order Status",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/api/vendororder/vendor/orders/status/66f24ff45a3fdca4ad9ef230",
+                    "path": [
+                        "api",
+                        "vendororder",
+                        "vendor",
+                        "orders",
+                        "status",
+                        "66f24ff45a3fdca4ad9ef230"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "\n{\n  \"status\": \"Preparing\"\n}\n"
+                }
+            }
+        },
+        {
+            "name": "Order-ETA ",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3001/api/orders/getOrderETA",
+                    "path": [
+                        "api",
+                        "orders",
+                        "getOrderETA"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "header": [
+                    {
+                        "key": "x-auth-token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZkMDFjZDA0ODJjODQ0ZmI3OTNjYjg3In0sImlhdCI6MTcyNDkxNTAyNiwiZXhwIjoxNzI3NTA3MDI2fQ.px_3p9QJ9BLW3pOuqvf5JQnF65P-CARnboDv86XIDFA",
+                        "disabled": true
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n    \"orderId\": \"66f6a49a98c2a6b175cbd9db\",\n    \"userId\" : \"66d01cd0482c844fb793cb87\"\n} "
+                }
+            }
+        },
+        {
+            "name": "sepcific-rejection",
+            "request": {
+                "method": "PUT",
+                "url": {
+                    "raw": "http://localhost:3001/api/vendororder/vendor/orders/reject-item",
+                    "path": [
+                        "api",
+                        "vendororder",
+                        "vendor",
+                        "orders",
+                        "reject-item"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n    \"vendorOrderId\": \"671a3fad57fc71fe6fb98ac3\",\n \"items\": [\n      {\n        \"variant\": {\n          \"variantSKU\": \"Var_30\",\n          \"color\": \"default\",\n          \"size\": \"default\",\n          \"sellingPrice\": 77,\n          \"mrp\": 77\n        },\n        \"productId\": \"C30-S30-f0d05-8eaa8\",\n        \"productName\": \"Capsicum Green\",\n        \"quantity\": 1,\n        \"totalPrice\": 77,\n        \"isRejected\": false,\n        \"_id\": \"671a3fad57fc71fe6fb98ac4\"\n      }\n    ]\n}"
+                }
+            }
+        }
+    ]
+}
